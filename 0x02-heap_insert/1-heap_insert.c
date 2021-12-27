@@ -67,7 +67,7 @@ heap_t *heap_insert(heap_t **root, int value)
 	}
 }
 /**
-* binary_tree_size size of the binary tree
+* binary_tree_size - size of the binary tree
 * Return: size_t size of the tree
 * @tree: pointer tree to be measured
 */
