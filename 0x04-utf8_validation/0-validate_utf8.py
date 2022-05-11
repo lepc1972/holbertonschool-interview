@@ -1,32 +1,22 @@
 #!/usr/bin/python3
-"""
-    Prototype: def validUTF8(data)
-    Return: True if data is a valid UTF-8 encoding,
-	else return False
-    A character in UTF-8 can be 1 to 4 bytes long
-    The data set can contain multiple characters
-    The data will be represented by a list of integers
-    Each integer represents 1 byte of data, therefore you
-	only need to handle the 8 least significant bits
-	of each integer
+""" Determines if a data set represents valid UTF-8 encoding.
 """
 
+
 def validUTF8(data):
-    """ 0. UTF-8 Validation"""
+    """ Determine if data has valid UTF-8 encoding.
+    """
+    # Use maks, to clean byte of anything beyond 8 least significant bits.
+    cleanByte = [rawByte & 0b11111111 for rawByte in data]
+
+    # Cast to byte type.
+    byte = bytes(cleanByte)
+
+    # Attempt to decode byte data.
     try:
-        isvalid = True
-        for i in data:
-            i = i & 0xff
-            if i >= 192 and i < 224:
-                isvalid = False
-            if i >= 224 and i < 240:
-                isvalid = False
-            if i >= 240 and i < 248:
-                isvalid = False
-            if i >= 128 and i < 192:
-                isvalid = False
-            if i > 255:
-                isvalid = False
-        return(isvalid)
-    except Exception as e:
-        return(False)
+        byte.decode()
+    except UnicodeDecodeError:
+        # If decoding fails, return False.
+        return False
+
+    return True
